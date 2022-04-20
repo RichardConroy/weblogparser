@@ -22,6 +22,10 @@ module Parser
       end
     end
 
+    def all
+      storage.dup
+    end
+
     private 
 
     attr_accessor :storage

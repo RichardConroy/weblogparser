@@ -1,3 +1,6 @@
 #!/usr/bin/env ruby
-require_relative '../lib/parser/cli'
+$LOAD_PATH.unshift "./lib"
+# require_relative '../lib/parser/cli'
+require 'parser/cli'
+
 ::Parser::CLI.run

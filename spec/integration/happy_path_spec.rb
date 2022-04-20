@@ -1,4 +1,6 @@
 require 'parser/cli'
+require 'pry'
+
 describe 'command line interface' do
   context 'with no arguments' do
     subject(:cli) { ::Parser::CLI.run }
@@ -19,10 +21,20 @@ describe 'command line interface' do
   context 'with smart pension webserver.log' do
     let(:arguments) { ['spec/fixtures/webserver.log'] }
     subject(:cli) { ::Parser::CLI.run(argv: arguments) }
+    let(:absolute_report) do
+      <<~EXPECTED
+        Page (absolute visits)
+        /about/2 90
+        /contact 89
+        /index 82
+        /about 81
+        /help_page/1 80
+        /home 78
+      EXPECTED
+    end
 
     it 'displays absolute hits by page ordered DESC' do
-      expect { cli }.to output(/Page (absolute visits)/).to_stdout
-      expect { cli }.to output(%r[/index 5]).to_stdout
+      expect { cli }.to output(absolute_report).to_stdout
     end
   end
 
