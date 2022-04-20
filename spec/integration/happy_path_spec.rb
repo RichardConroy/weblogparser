@@ -26,12 +26,12 @@ describe 'command line interface' do
     let(:absolute_report) do
       <<~EXPECTED
         Page (absolute visits)
-        /about/2 90
-        /contact 89
-        /index 82
-        /about 81
-        /help_page/1 80
-        /home 78
+        /about/2 90 visits
+        /contact 89 visits
+        /index 82 visits
+        /about 81 visits
+        /help_page/1 80 visits
+        /home 78 visits
       EXPECTED
     end
 

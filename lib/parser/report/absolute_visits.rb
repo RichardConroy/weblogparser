@@ -19,7 +19,7 @@ module Parser
       def format
         puts 'Page (absolute visits)'
         # TODO: code smells here. Call is giving us { 30 => ['/index'], 50 => ['/help']}. An object would be better
-        query.call.map { |visit_count| puts "#{visit_count.last.first} #{visit_count.first}" }
+        query.call.map { |visit_count| puts "#{visit_count.last.first} #{visit_count.first} visits" }
       end
 
       private
