@@ -1,4 +1,5 @@
 require 'parser/line_checker'
+require 'parser/null_visit_record'
 
 describe Parser::LineChecker do
   let(:line) { nil }
@@ -20,7 +21,7 @@ describe Parser::LineChecker do
     context 'when invalid' do
       let(:line) { 'kablooie' }
 
-      xit 'returns a NullVisit'
+      it { expect(subject.visit_record).to be_a_kind_of Parser::NullVisitRecord }
     end
 
     context 'with "/index 192.168.1.1' do

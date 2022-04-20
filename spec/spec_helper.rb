@@ -13,6 +13,25 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'dotenv/load'
+if ENV['SIMPLECOV']
+  require 'simplecov'
+  require 'simplecov-lcov'
+
+  SimpleCov.start do
+    add_filter(/^\/spec\//) # For RSpec
+
+    SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+    multiformatters = [
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::LcovFormatter
+    ]
+    SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(multiformatters)
+    enable_coverage(:branch) # Report branch coverage to trigger branch-level undercover warnings
+  end
+  # require 'undercover'
+end
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
