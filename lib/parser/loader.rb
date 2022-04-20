@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'parser'
 require 'parser/line_checker'
 
 module Parser
+  # Loads and parses the webserver log
   class Loader
     def initialize(file_path: nil)
       @file_path = file_path
@@ -11,15 +14,15 @@ module Parser
 
     def visits
       File.open(file_path).each_with_index do |line, index|
-        line_number = index +1
+        line_number = index + 1
         line_checks << LineChecker.new(line, line_number)
       end
       print_errors
       to_visit_records
     end
 
-
     private
+
     attr_reader :file_path, :line_checks
 
     def sanity_checks
@@ -32,7 +35,9 @@ module Parser
     end
 
     def print_errors
-      line_checker_errors.each { |invalid_line_check| puts "cannot parse 'invalid line in file' at line #{invalid_line_check.line_number}"}
+      line_checker_errors.each do |invalid_line_check|
+        puts "cannot parse 'invalid line in file' at line #{invalid_line_check.line_number}"
+      end
     end
 
     def to_visit_records

@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'parser'
 require 'parser/repository'
 require 'pry'
 
 module Parser
   module Query
+    # Command class to interrogate the repository and return the visit counts ordered descending
     class AbsoluteVisits
       class << self
         def call

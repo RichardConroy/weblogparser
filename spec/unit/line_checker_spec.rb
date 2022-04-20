@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'parser/line_checker'
 require 'parser/null_visit_record'
 

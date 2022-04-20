@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'parser/cli'
 require 'pry'
 
@@ -42,8 +44,7 @@ describe 'command line interface' do
     let(:arguments) { ['spec/fixtures/3rd_line_invalid.log'] }
     subject(:cli) { ::Parser::CLI.run(argv: arguments) }
 
-    it 'displays a parser error message' do
-      expect { cli }.to output(%r[cannot parse 'invalid line in file' at line 3]).to_stdout
-    end
+    it { expect { cli }.to output(/cannot parse 'invalid line in file' at line 3/).to_stdout }
+    it { expect { cli }.to raise_error(SystemExit) }
   end
 end

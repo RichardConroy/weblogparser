@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'parser'
 require 'parser/visit_record'
 require 'singleton'
@@ -15,8 +17,8 @@ module Parser
       case visit
       when VisitRecord
         storage << visit
-      when Array 
-        visit.each { |element| store(element) } # TODO: would like to make this pseudo transactional 
+      when Array
+        visit.each { |element| store(element) } # TODO: would like to make this pseudo transactional
       else
         raise TypeError, "only VisitRecord or arrays of VisitRecord supported. Received: #{visit.class}"
       end
@@ -26,9 +28,8 @@ module Parser
       storage.dup
     end
 
-    private 
+    private
 
     attr_accessor :storage
   end
 end
-

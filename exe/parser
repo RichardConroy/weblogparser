@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
-$LOAD_PATH.unshift "./lib"
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift './lib'
 # require_relative '../lib/parser/cli'
 require 'parser/cli'
 

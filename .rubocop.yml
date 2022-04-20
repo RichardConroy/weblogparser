@@ -1,0 +1,3 @@
+# Exclude rspec blocks from BlockLength style checks
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context']

@@ -1,4 +1,6 @@
-require "parser/version"
+# frozen_string_literal: true
+
+require 'parser/version'
 
 module Parser
   class Error < StandardError; end

@@ -1,16 +1,19 @@
+# frozen_string_literal: true
+
 require 'parser'
 require 'parser/visit_record'
 require 'parser/null_visit_record'
 
 module Parser
+  # Per line validator and parser
   class LineChecker
     def initialize(line, line_number)
-      @line, @line_number = line, line_number
-
+      @line = line
+      @line_number = line_number
     end
 
     def valid?
-      split_line&.count == 2 # TODO:
+      split_line&.count == 2 # TODO: we can do a more robust regex here
     end
 
     def visit_record
@@ -24,9 +27,6 @@ module Parser
     attr_reader :line, :line_number
 
     private
-
-    # attr_accessor :line, :line_number
-
 
     def split_line
       @_split_line ||= line&.split
