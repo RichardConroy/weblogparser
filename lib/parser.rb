@@ -2,7 +2,6 @@
 
 require 'parser/version'
 
+# Top level namespace for gem
 module Parser
-  class Error < StandardError; end
-  # Your code goes here...
 end
