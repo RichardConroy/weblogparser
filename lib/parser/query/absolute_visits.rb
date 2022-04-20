@@ -29,7 +29,7 @@ module Parser
       end
 
       def urls
-        @_urls ||= repository.all.map(&:url)
+        @urls ||= repository.all.map(&:url)
       end
 
       attr_accessor :repository

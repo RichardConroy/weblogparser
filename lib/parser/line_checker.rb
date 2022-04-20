@@ -29,7 +29,7 @@ module Parser
     private
 
     def split_line
-      @_split_line ||= line&.split
+      @split_line ||= line&.split
     end
   end
 end

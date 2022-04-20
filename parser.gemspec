@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Coding exercise'
   spec.homepage      = 'http://example.com/placeholder'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
 
   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
 
