@@ -3,7 +3,7 @@
 require 'parser'
 require 'parser/loader'
 require 'parser/repository'
-require 'parser/query/absolute_visits'
+require 'parser/report/absolute_visits'
 
 module Parser
   # System entry point for kicking off all the concerns from the terminal
@@ -13,9 +13,8 @@ module Parser
         print_help unless argv[0]
         loader = Loader.new(file_path: argv[0])
         Repository.instance.store loader.visits
-        print 'Page (absolute visits)'
-        puts
-        Query::AbsoluteVisits.call.map { |t| puts "#{t.last.first} #{t.first}" }
+
+        Report::AbsoluteVisits.format
       rescue StandardError => e
         rescue_actions(e)
       end
@@ -28,7 +27,6 @@ module Parser
         print_help
         puts error.message
         puts error.backtrace
-        exit(1)
       end
     end
   end
