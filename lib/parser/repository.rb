@@ -2,12 +2,12 @@
 
 require 'parser'
 require 'parser/visit_record'
-require 'singleton'
+# require 'singleton'
 
 module Parser
   # A strongly typed collection for VisitRecord instances
   class Repository
-    include Singleton
+    # include Singleton
 
     def initialize(storage: [])
       @storage = storage

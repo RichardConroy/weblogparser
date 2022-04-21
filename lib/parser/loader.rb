@@ -6,9 +6,10 @@ require 'parser/line_checker'
 module Parser
   # Loads and parses the webserver log
   class Loader
-    def initialize(file_path: nil)
+    def initialize(file_path: nil, writer: $stdout)
       @file_path = file_path
       @line_checks = []
+      @writer = writer
       sanity_checks
     end
 
@@ -23,7 +24,7 @@ module Parser
 
     private
 
-    attr_reader :file_path, :line_checks
+    attr_reader :file_path, :line_checks, :writer
 
     def sanity_checks
       raise ArgumentError, 'file_path required' unless file_path
@@ -36,7 +37,7 @@ module Parser
 
     def print_errors
       line_checker_errors.each do |invalid_line_check|
-        puts "cannot parse 'invalid line in file' at line #{invalid_line_check.line_number}"
+        writer.puts "cannot parse 'invalid line in file' at line #{invalid_line_check.line_number}"
       end
     end
 

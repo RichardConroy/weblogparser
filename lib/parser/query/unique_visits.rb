@@ -7,10 +7,10 @@ require 'pry'
 module Parser
   module Query
     # Command class to interrogate the repository and return the visit counts ordered descending
-    class AbsoluteVisits
+    class UniqueVisits
       class << self
-        def call(**args)
-          new(**args).query
+        def call
+          new.query
         end
       end
 
@@ -19,12 +19,8 @@ module Parser
       end
 
       def query
-        # binding.pry
-        repository.all.map { |vr| [vr.url, vr.ip] }
-          .group_by { |entry| entry.shift }   # => {'/home' => [[ip2],[ip2]..], '/contact' => [...]}
-          .map { |url, array| [url, array.count] } # => [['/home', 2],['/contact',5]...]
-          .sort_by { |tuple| -tuple.last }
-        # uniq_urls.group_by { |url| urls.count(url) }.sort_by { |tuple| -tuple.first }
+        raise StandardError, 'Not Implemented'
+        uniq_urls.group_by { |url| urls.count(url) }.sort_by { |tuple| -tuple.first }
       end
 
       private

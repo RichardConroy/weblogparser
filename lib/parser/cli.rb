@@ -10,19 +10,21 @@ module Parser
   # System entry point for kicking off all the concerns from the terminal
   class CLI
     class << self
-      def run(argv: ARGV)
-        new(argv: argv).run
+      def run(argv: ARGV, writer: $stdout)
+        new(argv: argv, writer: writer).run
       end
     end
 
-    def initialize(argv: )
+    def initialize(argv:, writer: )
       @file_path = argv[0]
+      @writer = writer
+      @repository = Repository.new
     end
 
     def run
       print_help unless file_path
       process_log_file
-      Report::AbsoluteVisits.format
+      Report::AbsoluteVisits.format writer: writer, repository: repository
     rescue StandardError => error
       rescue_actions(error)
     end
@@ -30,20 +32,20 @@ module Parser
     private
 
     def process_log_file
-      loader = Loader.new(file_path: file_path)
-      Repository.instance.store loader.visits
+      loader = Loader.new(file_path: file_path, writer: writer)
+      repository.store loader.visits
     end
 
     def print_help
-      puts 'Usage: parser <file>'
+      writer.puts 'Usage: parser <file>'
     end
 
     def rescue_actions(error)
       print_help
-      puts error.message
-      puts error.backtrace
+      writer.puts error.message
+      writer.puts error.backtrace
     end
 
-    attr_reader :file_path
+    attr_reader :file_path, :writer, :repository
   end
 end
