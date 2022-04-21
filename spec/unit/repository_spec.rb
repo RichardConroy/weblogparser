@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'parser/repository'
 require 'parser/visit_record'
 
-describe Parser::Repository do 
+describe Parser::Repository do
   describe '#store' do
     context 'with VisitRecord' do
       let(:argument) { Parser::VisitRecord.new url: '/home', ip: '192.168.1.1' }
 
-      it { expect { subject.store(argument)}.not_to raise_error }
+      it { expect { subject.store(argument) }.not_to raise_error }
       it 'adds it to the internal storage' do
         expect { subject.store(argument) }.to change { subject.all.count }.by(1)
       end
@@ -22,15 +24,21 @@ describe Parser::Repository do
         ]
       end
 
-      it { expect { subject.store(argument)}.not_to raise_error }
+      it { expect { subject.store(argument) }.not_to raise_error }
       it 'adds it to the internal storage' do
         expect { subject.store(argument) }.to change { subject.all.count }.by(4)
       end
     end
 
     context 'with string' do
-      it { expect { subject.store('kaboom')}.to raise_error(TypeError) }
-      it { expect { subject.store('kaboom') rescue nil }.not_to change { subject.all.count} }
+      it { expect { subject.store('kaboom') }.to raise_error(TypeError) }
+      it 'does not add to storage' do
+        expect do
+          subject.store('kaboom')
+        rescue StandardError
+          nil
+        end.not_to(change { subject.all.count })
+      end
     end
   end
 end

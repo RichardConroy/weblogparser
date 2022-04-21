@@ -8,8 +8,8 @@ describe Parser::Query::AbsoluteVisits do
   let(:repository) { Parser::Repository.new }
   subject { described_class.new(repository: repository) }
 
-  describe '#query' do 
-    context 'with empty repository' do 
+  describe '#query' do
+    context 'with empty repository' do
       it { expect(subject.query).to eq [] }
     end
 
@@ -26,7 +26,7 @@ describe Parser::Query::AbsoluteVisits do
       let(:url) { '/home' }
       let(:ip) { '192.168.1.1' }
       before do
-        4.times { repository.store(Parser::VisitRecord.new url: url, ip: ip) }
+        4.times { repository.store(Parser::VisitRecord.new(url: url, ip: ip)) }
       end
 
       it 'returns a single entry pair with a total hit count' do
@@ -39,8 +39,8 @@ describe Parser::Query::AbsoluteVisits do
       let(:url_about) { '/about' }
       let(:ip) { '192.168.1.1' }
       before do
-        2.times { repository.store(Parser::VisitRecord.new url: url_about, ip: ip) }
-        6.times { repository.store(Parser::VisitRecord.new url: url, ip: ip) }
+        2.times { repository.store(Parser::VisitRecord.new(url: url_about, ip: ip)) }
+        6.times { repository.store(Parser::VisitRecord.new(url: url, ip: ip)) }
       end
 
       it 'returns a two pairs with a total hit count ordered desc' do
