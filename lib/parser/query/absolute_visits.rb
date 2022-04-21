@@ -2,7 +2,6 @@
 
 require 'parser'
 require 'parser/repository'
-require 'pry'
 
 module Parser
   module Query

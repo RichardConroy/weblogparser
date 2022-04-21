@@ -1,44 +1,75 @@
 # Parser
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/parser`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a coding exercise. The original requirements were to create a command line script
+that would parse a file containing a webserver access log and count and present every hit,
+and every unique hit.
 
-TODO: Delete this and the text above, and describe your gem
+I have packaged this up as a gem. Maybe a bit overkill, but gem project structure is as good a project structure as any, and its got some freebies in terms of pain free distribution of executables.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+This is a gemified distribution of a command line utility. So the appropriate usage is
+
+`$ gem install parser # TODO: complete the right URLs`
+
+But you could of course add it to an existing gemfile.
 
 ```ruby
-gem 'parser'
+gem 'parser' # TODO share out the git link
 ```
 
 And then execute:
 
     $ bundle install
 
-Or install it yourself as:
-
-    $ gem install parser
-
 ## Usage
 
-TODO: Write usage instructions here
+`$ exe/parser <path to logfile>`
 
-## Development
+where the logfile is in the format of
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```bash
+/index 192.168.1.1
+/help 201.10.10.155
+```
+Where the first part is a path reference, and the second is an IP address.
+In practice the tool is not strict about RFC standards:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```bash
+¯\_(ツ)_/¯ unos.dos.tres.quattro
+```
+is just as valid as RFC compliant paths / urls and ip addresses. For anything it does disagree with it will print out the line an line number in the input that it had issue with.
 
-## Contributing
+## Problem Approach
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/parser. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/parser/blob/master/CODE_OF_CONDUCT.md).
+My main goals here were
+- solve the asked for problem
+- keep it easy to read
+- good testing, driven from an integration level
+- good ruby practices leaning on SOLID principles for familiar structure and extensibilty
+- play about a bit with using a gem as a wrapper for a CLI
 
+### Lessons learned
 
-## License
+I have kept my commit history ungroomed. I get interrupted/distracted a lot, and have to park the work or pick up later, so I am usually trying to cram in useful bits of work between interruptions.
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+I dont often go about trying to test CLIs at a console level, ie. verifying output behaviour by examining STDOUT. Tried it here, having forgotten why I swore of doing it last time. Testing at the integration level was pretty good, and it covered the main code well according to the reports, but it got tedious trying to fix these. I reworked everything to dependency inject an IO replacement, there is a nicer abstraction for this I am sure but it wasnt immediately available.
 
-## Code of Conduct
+A singleton data structure for storing results worked very nicely until it leaked state between tests. I ended up Dependency injecting this everywhere, which was a bit of a kludge. It feels like a more elegant approach could have been achieved.
 
-Everyone interacting in the Parser project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/parser/blob/master/CODE_OF_CONDUCT.md).
+Testing at the integration level covered a lot of the code, especially when I went manually building my own fixtures to confirm results. There was a lot of headroom there for continuing the testing style in that manner.
+
+There is some repeat testing in the code, but I never found an opportunity to start leveraging shared examples etc.
+
+I didnt trust the coverage reports and backfilled unit tests around complex code in the query classes afterwards.
+
+I leaned heavily on rubocop / simplecov / reek once tests went green. For the most part kept the defaults.
+
+I didnt over think the namespacing of the code, but the top level namespace feels like some of those classes belong elsewhere. It does feel like some other abstractions could have been teased out (like formatting of messages).
+
+### In conclusion
+
+So mostly adhered to SOLID principles for everything, and drove correctness through integration tests. I didnt go down the rabbit hole of regex-fu or RFC correctness, but left the tests in a good place state that those requirement could be done in a test driven way.
+
+I am happy enough with the relationship between repository - report formatter - data query. All of these feel quite easily extensible.
+
