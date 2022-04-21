@@ -9,10 +9,12 @@ describe 'command line interface' do
   subject(:cli) { ::Parser::CLI.run argv: arguments, writer: strio }
 
   context 'with no arguments' do
-    before { cli }
     it 'prints the help' do
+      cli
       expect(strio.string).to include('Usage: parser <file>')
     end
+
+    it { expect { cli }.not_to raise_error }
   end
 
   context 'with unknown arguments' do

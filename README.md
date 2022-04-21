@@ -8,11 +8,28 @@ I have packaged this up as a gem. Maybe a bit overkill, but gem project structur
 
 ## Installation
 
-This is a gemified distribution of a command line utility. So the appropriate usage is
+This is a gemified distribution of a command line utility.
 
-`$ gem install parser # TODO: complete the right URLs`
+So clone the repository.
 
-But you could of course add it to an existing gemfile.
+Requires ruby 2.7.5 so
+
+`$ rbenv local 2.7.5`
+
+then
+
+`$ bundle install`
+
+sanity check that the tests pass
+
+`$ rspec`
+
+then test out the executable against some of the fixtures:
+
+`$ exe/parser spec/fixtures/webserver.log`
+`$ exe/parser spec/fixtures/personal.log`
+
+But you could of course add it to an existing gemfile (untested)
 
 ```ruby
 gem 'parser' # TODO share out the git link

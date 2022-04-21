@@ -5,6 +5,7 @@ require 'parser/loader'
 require 'parser/repository'
 require 'parser/report/visit_count'
 require 'parser/query/unique_visits'
+require 'parser/query/absolute_visits'
 require 'pry'
 
 module Parser
@@ -23,9 +24,12 @@ module Parser
     end
 
     def run
-      print_help unless file_path
-      process_log_file
-      print_reports
+      if file_path
+        process_log_file
+        print_reports
+      else
+        print_help
+      end
     rescue StandardError => error
       rescue_actions(error)
     end
