@@ -9,8 +9,8 @@ module Parser
     # Command class to interrogate the repository and return the visit counts ordered descending
     class UniqueVisits
       class << self
-        def call
-          new.query
+        def call(**args)
+          new(**args).query
         end
       end
 
@@ -19,19 +19,13 @@ module Parser
       end
 
       def query
-        raise StandardError, 'Not Implemented'
-        uniq_urls.group_by { |url| urls.count(url) }.sort_by { |tuple| -tuple.first }
+        repository.all.map(&:to_a)
+                  .group_by(&:shift)
+                  .map { |url, array| [url, array.uniq.count] }
+                  .sort_by { |pair| -pair.last }
       end
 
       private
-
-      def uniq_urls
-        urls.uniq
-      end
-
-      def urls
-        @urls ||= repository.all.map(&:url)
-      end
 
       attr_accessor :repository
     end

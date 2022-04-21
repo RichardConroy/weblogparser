@@ -4,6 +4,7 @@ require 'parser'
 require 'parser/loader'
 require 'parser/repository'
 require 'parser/report/absolute_visits'
+require 'parser/query/unique_visits'
 require 'pry'
 
 module Parser
@@ -15,7 +16,7 @@ module Parser
       end
     end
 
-    def initialize(argv:, writer: )
+    def initialize(argv:, writer:)
       @file_path = argv[0]
       @writer = writer
       @repository = Repository.new
@@ -24,7 +25,7 @@ module Parser
     def run
       print_help unless file_path
       process_log_file
-      Report::AbsoluteVisits.format writer: writer, repository: repository
+      print_reports
     rescue StandardError => error
       rescue_actions(error)
     end
@@ -34,6 +35,11 @@ module Parser
     def process_log_file
       loader = Loader.new(file_path: file_path, writer: writer)
       repository.store loader.visits
+    end
+
+    def print_reports
+      Report::AbsoluteVisits.format query: Query::AbsoluteVisits, writer: writer, repository: repository
+      Report::AbsoluteVisits.format query: Query::UniqueVisits, writer: writer, repository: repository
     end
 
     def print_help

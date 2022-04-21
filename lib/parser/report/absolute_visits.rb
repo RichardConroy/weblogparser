@@ -12,18 +12,24 @@ module Parser
         end
       end
 
-      def initialize(query: Query::AbsoluteVisits, writer: $stdout, repository:)
-        @query, @writer, @repository = query, writer, repository
+      def initialize(repository:, query: Query::AbsoluteVisits, writer: $stdout)
+        @query = query
+        @writer = writer
+        @repository = repository
       end
 
       def format
-        writer.puts 'Page (absolute visits)'
-        query.call(repository: repository).each  do
-          |visit_count| writer.puts "#{visit_count.first} #{visit_count.last} visits"
+        writer.puts title
+        query.call(repository: repository).each do |visit_count|
+          writer.puts "#{visit_count.first} #{visit_count.last} visits"
         end
       end
 
       private
+
+      def title
+        "Page (#{query.to_s.split('::').last})" # => Page AbsoluteVisits
+      end
 
       attr_reader :query, :writer, :repository
     end

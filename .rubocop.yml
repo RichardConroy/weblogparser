@@ -4,3 +4,7 @@ AllCops:
 # Exclude rspec blocks from BlockLength style checks
 Metrics/BlockLength:
   IgnoredMethods: ['describe', 'context']
+
+# Conflicting with reek
+Naming/RescuedExceptionsVariableName:
+  Enabled: false

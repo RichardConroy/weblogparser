@@ -30,7 +30,7 @@ describe 'command line interface' do
 
     let(:absolute_report) do
       <<~EXPECTED
-        Page (absolute visits)
+        Page (AbsoluteVisits)
         /about/2 90 visits
         /contact 89 visits
         /index 82 visits
@@ -57,7 +57,7 @@ describe 'command line interface' do
     let(:arguments) { ['spec/fixtures/personal.log'] }
     let(:absolute_report) do
       <<~ABBREVIATED
-        Page (absolute visits)
+        Page (AbsoluteVisits)
         /contact_with_6_repeat_visits 6 visits
         /help_page_with_5_unique 5 visits
         /home_2unique_3repeat 5 visits
@@ -66,7 +66,7 @@ describe 'command line interface' do
 
     let(:unique_report) do
       <<~UNIQUE
-        Page (unique visits)
+        Page (UniqueVisits)
         /help_page_with_5_unique 5 visits
         /home_2unique_3repeat 3 visits
         /contact_with_6_repeat_visits 1 visits
@@ -83,7 +83,6 @@ describe 'command line interface' do
       expect(strio.string).to include(unique_report)
     end
   end
-
 
   context 'with log file containing invalid record' do
     let(:arguments) { ['spec/fixtures/3rd_line_invalid.log'] }

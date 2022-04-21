@@ -10,6 +10,10 @@ module Parser
       @ip = ip
     end
 
+    def to_a
+      [@url, @ip]
+    end
+
     attr_reader :url, :ip
   end
 end
