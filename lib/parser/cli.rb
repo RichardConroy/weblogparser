@@ -3,7 +3,7 @@
 require 'parser'
 require 'parser/loader'
 require 'parser/repository'
-require 'parser/report/absolute_visits'
+require 'parser/report/visit_count'
 require 'parser/query/unique_visits'
 require 'pry'
 
@@ -38,8 +38,8 @@ module Parser
     end
 
     def print_reports
-      Report::AbsoluteVisits.format query: Query::AbsoluteVisits, writer: writer, repository: repository
-      Report::AbsoluteVisits.format query: Query::UniqueVisits, writer: writer, repository: repository
+      Report::VisitCount.format query: Query::AbsoluteVisits, writer: writer, repository: repository
+      Report::VisitCount.format query: Query::UniqueVisits, writer: writer, repository: repository
     end
 
     def print_help

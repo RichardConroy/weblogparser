@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
-require 'parser/query/absolute_visits'
-
 module Parser
   module Report
     # Report generator for printing out the results of the absolute visits to each url
-    class AbsoluteVisits
+    class VisitCount
       class << self
         def format(**args)
           new(**args).format
         end
       end
 
-      def initialize(repository:, query: Query::AbsoluteVisits, writer: $stdout)
+      def initialize(repository:, query:, writer: $stdout)
         @query = query
         @writer = writer
         @repository = repository
