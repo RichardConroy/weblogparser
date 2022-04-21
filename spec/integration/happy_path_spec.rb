@@ -40,6 +40,23 @@ describe 'command line interface' do
     end
   end
 
+  context 'with abbreviated log' do
+    let(:arguments) { ['spec/fixtures/personal.log'] }
+    subject(:cli) { ::Parser::CLI.run(argv: arguments) }
+    let(:absolute_report) do
+      <<~ABBREVIATED
+        Page (absolute visits)
+        /contact_with_6_repeat_visits 6 visits
+        /help_page_with_5_unique 5 visits
+        /home_2unique_3repeat 5 visits
+      ABBREVIATED
+    end
+
+    it 'displays absolute hits by page ordered DESC' do
+      expect { cli }.to output(absolute_report).to_stdout
+    end
+  end
+
   context 'with log file containing invalid record' do
     let(:arguments) { ['spec/fixtures/3rd_line_invalid.log'] }
     subject(:cli) { ::Parser::CLI.run(argv: arguments) }

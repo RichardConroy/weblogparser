@@ -17,6 +17,12 @@ describe Parser::LineChecker do
 
       it { expect(subject.valid?).to eq true }
     end
+
+    context 'with "/home_2unique_3repeat 184.123.665.067' do
+      let(:line) { '/home_2unique_3repeat 184.123.665.067' }
+
+      it { expect(subject.valid?).to eq true }
+    end
   end
 
   describe '#visit_record' do
